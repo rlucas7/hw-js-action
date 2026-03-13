@@ -32981,7 +32981,10 @@ const defaults = {
 };
 Octokit.plugin(restEndpointMethods, paginateRest).defaults(defaults);
 
-const context = new Context();
+new Context();
+
+const { exec } = require('child_process');
+
 
 try {
   // `who-to-greet` input defined in action metadata file
@@ -32992,9 +32995,22 @@ try {
   const time = new Date().toTimeString();
   setOutput("time", time);
 
+  exec('ccache -s', (error, stdout, stderr) => {
+    if (error) {
+      setOutput(`exec error: ${error.message}`);
+      return;
+    }
+    if (stderr) {
+      setOutput(`stderr: ${stderr}`);
+      return;
+    }
+    code.setOutput(`stdout: ${stdout}`);
+  });
+
   // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(context.payload, undefined, 2);
-  info(`The event payload: ${payload}`);
+  //const payload = JSON.stringify(github.context.payload, undefined, 2);
+  //core.info(`The event payload: ${payload}`);
+
 } catch (error) {
   setFailed(error.message);
 }
