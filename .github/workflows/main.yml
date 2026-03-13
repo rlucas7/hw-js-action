@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Hello world action step
         id: hello
-        uses: rlucas7/hw-js-action@298a51e22d1537e3a0f6ad397774478a226c1303
+        uses: rlucas7/hw-js-action@5c814e21532f9643027b94a5d3c7ab13377f8ca0
         with:
           who-to-greet: Meow cat
 
